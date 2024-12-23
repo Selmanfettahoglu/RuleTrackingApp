@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block title %}Add Behavior{% endblock %}
+
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Add New Behavior</h2>
+
+
+    <!-- Behavior Entry Form -->
+    <form method="POST" class="col-md-6 offset-md-3">
+        {{ form.hidden_tag() }}
+        <div class="mb-3">
+            <label for="behavior" class="form-label">Behavior Description</label>
+            {{ form.behavior(class="form-control", placeholder="Enter behavior description") }}
+        </div>
+        <div class="mb-3">
+            <label for="points" class="form-label">Points</label>
+            {{ form.points(class="form-control", placeholder="Enter points for behavior") }}
+        </div>
+        <button type="submit" class="btn btn-success w-100">Add Behavior</button>
+    </form>
+
+
+    <!-- Display Existing Behaviors -->
+    <h3 class="mt-5">Existing Behaviors</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Description</th>
+                <th>Points</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for behavior in behaviors %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ behavior.description }}</td>
+                <td>{{ behavior.points }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+                <!-- Back Button or Other Links -->
+        <div class="button-container text-center mt-5">
+            <a href="{{ url_for('main.teacher_home') }}" class="btn btn-primary btn-lg">Go Back to Home</a>
+        </div>
+</div>
+{% endblock %}
+
+
+
+

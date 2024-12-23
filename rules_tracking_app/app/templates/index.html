@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Rules Tracker</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5 text-center">
+        {% if username %}
+            <h1 class="display-1">👋 Welcome, {{ username }}!</h1>
+            <p class="lead">Here are your available options:</p>
+            <div class="mt-4">
+                <!-- Behavior Table for Current User -->
+                <a href="{{ url_for('main.student_behavior_table', student_name=username) }}" class="btn btn-info btn-lg">View Behavior Table</a>
+
+                {% if session['role'] == 'elevated' %}
+                    <!-- Teacher-Specific Options -->
+                    <a href="{{ url_for('main.add_behavior_teacher') }}" class="btn btn-warning btn-lg">Manage Behaviors</a>
+                    <a href="{{ url_for('main.behavior_form') }}" class="btn btn-primary btn-lg">Enter Points</a>
+
+                    <!-- Dropdown for Viewing Individual Student Reports -->
+                    <div class="mt-4">
+                        <h3>Select a Student to View Their Report:</h3>
+                        <form method="GET" action="{{ url_for('main.teacher_view_student', student_name='') }}">
+                            <div class="form-group">
+                                <select name="student_name" class="form-control form-control-lg" required>
+                                    <option value="" disabled selected>-- Select a Student --</option>
+                                    {% for student in students %}
+                                    <option value="{{ student.username }}">{{ student.username }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-success btn-lg mt-3">View Report</button>
+                        </form>
+                    </div>
+                {% endif %}
+
+                <!-- Logout Button -->
+                <a href="{{ url_for('main.logout') }}" class="btn btn-danger btn-lg mt-4">Logout</a>
+            </div>
+        {% else %}
+            <!-- Login/Registration for Unauthenticated Users -->
+            <h1 class="display-1">⚠️ Home Rules Tracker</h1>
+            <p class="lead">Please log in or register to access the system.</p>
+            <div class="mt-4">
+                <a href="{{ url_for('main.login') }}" class="btn btn-primary btn-lg">Login</a>
+                <a href="{{ url_for('main.register_teacher') }}" class="btn btn-secondary btn-lg">Register</a>
+            </div>
+        {% endif %}
+    </div>
+

@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+
+{% block title %}Admin Dashboard{% endblock %}
+
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Admin Dashboard</h1>
+
+
+    <!-- Section for Teacher-Specific Actions -->
+    <div class="section">
+        <h3 class="text-center">Teacher Tools</h3>
+        <div class="d-flex flex-wrap justify-content-center">
+            <a href="{{ url_for('main.teacher_home') }}" class="btn btn-warning btn-lg m-2">Teacher Home</a>
+            <a href="{{ url_for('main.add_behavior_teacher') }}" class="btn btn-primary btn-lg m-2">Add Behavior</a>
+            <a href="{{ url_for('main.students_points') }}" class="btn btn-info btn-lg m-2">View Students' Points</a>
+            <a href="{{ url_for('main.student_list') }}" class="btn btn-success btn-lg m-2">Student List</a>
+        </div>
+    </div>
+
+
+    <!-- Section to Add New Teacher -->
+    <div class="section">
+        <h3 class="text-center">Add New Teacher</h3>
+        <form method="POST" action="{{ url_for('main.register_teacher') }}">
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="username" name="username" placeholder="Enter teacher's username" required>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Enter teacher's password" required>
+            </div>
+            <button type="submit" class="btn btn-success w-100">Create Teacher</button>
+        </form>
+    </div>
+
+
+    <!-- Section to View and Manage Teachers -->
+    <div class="section">
+        <h3 class="text-center">Manage Teachers</h3>
+        <table class="table table-striped table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th>Username</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for teacher in teachers %}
+                    <tr>
+                        <td>{{ teacher.username }}</td>
+                        <td class="text-center">
+                            <form method="POST" action="{{ url_for('main.delete_teacher', teacher_id=teacher.id) }}" class="d-inline" onsubmit="return confirmDelete('{{ teacher.username }}')">
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+    <!-- Logout Button -->
+    <div class="text-center mt-3">
+        <a href="{{ url_for('main.logout') }}" class="btn btn-danger btn-lg">Logout</a>
+    </div>
+</div>
+
+
+<script>
+    function confirmDelete(username) {
+        return confirm(`Are you sure you want to delete the teacher "${username}"?`);
+    }
+</script>
+{% endblock %}
+
+
+
+

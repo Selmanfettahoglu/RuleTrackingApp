@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Behavior Report - {{ student_name or "Student" }}</title>
+  <!-- Bootstrap 5 CDN with SRI -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-w76A4pqhcyVfFR8VQ5VZ0E49aUtwE5VZb4WrqrqR5K8EoP9iOsyKz4Z44W7BJhXt"
+        crossorigin="anonymous">
+  <style>
+      body {
+          background-color: #f8f9fa;
+          font-family: 'Arial', sans-serif;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 40vh;
+          margin: 0;
+      }
+      .container {
+          max-width: 900px;
+      }
+      h1 {
+          font-size: 2.5rem;
+          font-weight: bold;
+          color: #343a40;
+      }
+      h3 {
+          font-size: 1.8rem;
+          color: #28a745;
+      }
+      .alert-warning {
+          background-color: #f92525;
+          color: white;
+          font-size: 1.2rem;
+      }
+      table th {
+          background-color: #007bff;
+          color: white;
+          font-size: 1.1rem;
+      }
+      table td {
+          font-size: 1rem;
+      }
+      table {
+          margin-top: 20px;
+      }
+      .table-container {
+          background-color: white;
+          box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+          border-radius: 10px;
+          padding: 20px;
+      }
+      .button-container {
+          margin-top: 30px;
+          text-align: center;
+      }
+  </style>
+</head>
+<body>
+  <div class="container">
+      <div class="table-container">
+          <h1 class="text-center">Behavior Report for {{ student_name }}</h1>
+          <hr>
+
+
+          <!-- Display the total percentage -->
+          <h3 class="text-center">Total Percentage: {{ percentage | round(2) }}%</h3>
+
+
+          <!-- Display the message based on the percentage -->
+          {% if internet_message %}
+          <div class="alert alert-warning text-center" role="alert" aria-live="polite">
+              <strong>{{ internet_message }}</strong>
+          </div>
+          {% endif %}
+
+
+          <!-- Behavior Table -->
+          <table class="table table-bordered table-striped">
+              <thead>
+                  <tr>
+                      <th>Behavior</th>
+                      <th>Occurrences</th>
+                      <th>Total Points</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  {% if table_data %}
+                      {% for row in table_data %}
+                      <tr>
+                          <td>{{ row.behavior }}</td>
+                          <td>{{ row.occurrences }}</td>
+                          <td>{{ row.total_points }}</td>
+                      </tr>
+                      {% endfor %}
+                  {% else %}
+                      <tr>
+                          <td colspan="3" class="text-center">No behavior records available.</td>
+                      </tr>
+                  {% endif %}
+              </tbody>
+          </table>
+      </div>
+
+
+      <!-- Back Button -->
+      <div class="button-container">
+          <a href="{{ url_for('main.student_home') }}" class="btn btn-primary btn-lg">Go Back to Home</a>
+      </div>
+  </div>
+
+
+  <!-- Bootstrap JS with SRI -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+          integrity="sha384-oBqDVmMz4fnFO9gybJcZTxPw3ylb6Jhb1KFmFFMSR8iCJ5T85GnLow2kgDiGZnEJ"
+          crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"
+          integrity="sha384-cn7l7gDp0eyniUwwAZgrE2c8zEmNjB1Kn2cJo36gB0XZ7p4p6F6nTgtSBeqccDIr"
+          crossorigin="anonymous"></script>
+</body>
+</html>
+
+
+
+

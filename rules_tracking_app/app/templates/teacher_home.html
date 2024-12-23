@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+
+{% block title %}Teacher Home{% endblock %}
+
+
+{% block content %}
+<div class="container mt-5 text-center">
+    {% if username %}
+        <h1 class="display-1">👋 Welcome, {{ username }}!</h1>
+        <p class="lead">Here are your management tools:</p>
+        <div class="mt-4">
+            <!-- Teacher-Specific Options -->
+            <a href="{{ url_for('main.add_behavior_teacher') }}" class="btn btn-warning btn-lg">Manage Behaviors</a>
+            <a href="{{ url_for('main.behavior_form') }}" class="btn btn-primary btn-lg">Enter Points</a>
+            <a href="{{ url_for('main.register_student') }}" class="btn btn-secondary btn-lg">Create Student Account</a>
+            <a href="{{ url_for('main.student_list') }}" class="btn btn-secondary btn-lg">Student List</a>
+
+
+            <!-- Dropdown for Viewing Individual Student Reports -->
+            <div class="mt-4">
+                <h3>Click the green button to View Their Report:</h3>
+                <form method="GET" action="{{ url_for('main.teacher_view_student', student_name='') }}">
+                    <div class="form-group">
+                        <!-- Uncomment if dropdown is needed -->
+                        <!--
+                        <select name="student_name" class="form-control form-control-lg" required>
+                            <option value="" disabled selected>&#45;&#45; Select a Student &#45;&#45;</option>
+                            {% for student in students %}
+                                <option value="{{ student.username }}">{{ student.username }}</option>
+                            {% endfor %}
+                        </select>
+                        -->
+                    </div>
+                    <a href="{{ url_for('main.students_points') }}" class="btn btn-success btn-lg mt-3">View Report</a>
+                </form>
+            </div>
+
+
+            <!-- Logout Button -->
+            <a href="{{ url_for('main.logout') }}" class="btn btn-danger btn-lg mt-4">Logout</a>
+        </div>
+    {% else %}
+        <!-- Redirect to Login -->
+        <h1 class="display-1">⚠️ Home Rules Tracker</h1>
+        <p class="lead">Please log in to access your management tools.</p>
+        <div class="mt-4">
+            <a href="{{ url_for('main.login') }}" class="btn btn-primary btn-lg">Login</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+
+
+

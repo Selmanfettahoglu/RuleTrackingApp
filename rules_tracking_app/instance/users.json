@@ -1,0 +1,14 @@
+{
+  "teacher": {
+    "password": "teacher123",
+    "role": "elevated"
+  },
+  "nihat": {
+    "password": "student123",
+    "role": "student"
+  },
+  "busra": {
+    "password": "student456",
+    "role": "student"
+  }
+}

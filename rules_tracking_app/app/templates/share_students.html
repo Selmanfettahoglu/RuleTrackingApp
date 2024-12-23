@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Share Students</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5 text-center">
+        <h1 class="display-4">Share Students</h1>
+
+
+            <h3>Share Your Students</h3>
+            {% for student in students %}
+                <form method="POST" action="{{ url_for('main.share_student', student_id=student.id) }}">
+                    <div>
+                        <label>{{ student.username }}</label>
+                        <select name="target_teacher_id" required>
+                            <option value="" disabled selected>-- Select a Teacher --</option>
+                            {% for teacher in teachers %}
+                                <option value="{{ teacher.id }}">{{ teacher.username }}</option>
+                            {% endfor %}
+                        </select>
+                        <button type="submit" class="btn btn-primary">Share {{ student.username }}</button>
+                    </div>
+                </form>
+            {% endfor %}
+
+
+
+
+
+
+
+
+
+
+
+        <a href="{{ url_for('main.teacher_home') }}" class="btn btn-secondary mt-4">Back to Home</a>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+
+
+
